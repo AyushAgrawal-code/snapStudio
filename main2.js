@@ -195,6 +195,7 @@ function pauseRecording() {
   if (mediaRecorder && mediaRecorder.state === 'recording') {
     mediaRecorder.pause();
     isPaused = true;
+    video.pause();
 
     // Pause the timer
     clearInterval(recordingTimer);
@@ -214,7 +215,7 @@ function continueRecording() {
   if (mediaRecorder && mediaRecorder.state === 'paused') {
     mediaRecorder.resume();
     isPaused = false;
-
+    video.play();
     // Resume the timer without resetting it
     startTimer();
 
