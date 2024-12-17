@@ -1,0 +1,169 @@
+
+/* General Reset */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #6c63ff, #3b3b98);
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Background Animation */
+body::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(108, 99, 255, 0.6), rgba(59, 59, 152, 0.9));
+  animation: rotate 10s linear infinite;
+  z-index: -1;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Login Container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Card Styling */
+.login-card {
+  background: #ffffff;
+  color: #333333;
+  border-radius: 15px;
+  padding: 30px;
+  width: 350px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 1.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-card h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #3b3b98;
+}
+
+.login-card p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #555555;
+}
+
+/* Input Group Styling */
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 15px;
+  padding-right: 40px; /* Space for eye icon */
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 14px;
+  color: #555555;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: #6c63ff;
+  box-shadow: 0 0 8px rgba(108, 99, 255, 0.5);
+}
+
+.input-group .toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.input-group .toggle-password:hover {
+  color: #6c63ff;
+}
+
+/* Button */
+form button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #6c63ff, #3b3b98);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+  background: linear-gradient(90deg, #3b3b98, #6c63ff);
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+}
+
+/* Additional Options */
+.login-options {
+  margin-top: 20px;
+}
+
+.login-options a {
+  color: #6c63ff;
+  text-decoration: none;
+  font-weight: bold;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.login-options a:hover {
+  color: #3b3b98;
+  text-decoration: underline;
+}
+
+.login-options a:hover::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: #6c63ff;
+  box-shadow: 0 0 8px #6c63ff;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhotoSnap Studio</title>
+  <link rel="stylesheet" href="./main2.css">
+  <script defer src="./main2.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+</head>
+<body>
+  
+  <header class="header">
+    <h1>🎥 PhotoSnap Studio</h1>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+  </header>
+  <div class="page-container">
+    <main>
+        <div class="camera-container">
+            <video id="video" class="video-frame" autoplay></video>
+            <div class="timer" id="timer">00:00</div>
+          </div>
+      <div class="controls">
+        <button id="photoModeButton" class="control-btn">📸 Photo Mode</button>
+        <button id="videoModeButton" class="control-btn">🎥 Video Mode</button>
+      </div>
+        
+        <div class="controls">
+<!-- Capture Button (Hidden by Default) -->
+        <button id="captureButton" class="control-btn" style="display: none;">📷 Capture</button>
+        <button id="pauseButton" class="control-btn" style="display: none;">⏸ Pause</button>
+        <button id="continueButton" class="control-btn" style="display: none;">▶ Continue</button>
+        <button id="stopButton" class="control-btn" style="display: none;">⏹ Stop</button>
+        <button id="saveButton" class="control-btn" style="display: none;">💾 Save</button>
+      </div>
+
+     <!-- Filter Buttons -->
+<div class="filter-container">
+    <button onclick="applyFilter('grayscale(100%)')" class="filter-btn">Grayscale</button>
+    <button onclick="applyFilter('sepia(100%)')" class="filter-btn">Sepia</button>
+    <button onclick="applyFilter('brightness(150%)')" class="filter-btn">Brightness</button> <!-- New Brightness Button -->
+    <button onclick="resetFilter()" class="filter-btn reset-btn">Reset</button>
+</div>
+
+    </main>
+  </div>
+</body>
+</html>
