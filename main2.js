@@ -139,7 +139,32 @@ function startRecording() {
     return;
   }
 
-  mediaRecorder = new MediaRecorder(stream);
+  // Create an offscreen canvas
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  
+  // Set the canvas size to match the video size
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  // Create a canvas stream
+  const canvasStream = canvas.captureStream();
+
+  // Mirror video filters on canvas frames
+  const drawFrame = () => {
+    ctx.filter = currentFilter; // Apply the filter
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    requestAnimationFrame(drawFrame); // Keep updating frames
+  };
+  drawFrame();
+
+  // Combine canvas stream with audio (if available) from the original stream
+  const combinedStream = new MediaStream([
+    ...canvasStream.getVideoTracks(),
+    ...stream.getAudioTracks(),
+  ]);
+
+  mediaRecorder = new MediaRecorder(combinedStream);
   recordedChunks = [];
 
   mediaRecorder.ondataavailable = (event) => {
@@ -156,12 +181,12 @@ function startRecording() {
     saveButton.onclick = () => {
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'recording.webm';
+      a.download = 'recording_with_filters.webm';
       a.click();
       saveButton.style.display = 'none';
       URL.revokeObjectURL(url);
     };
-    console.log('Video recording saved.');
+    console.log('Video recording saved with filter:', currentFilter);
   };
 
   mediaRecorder.start();
@@ -170,8 +195,9 @@ function startRecording() {
   captureButton.textContent = '⏹ Stop Recording';
   pauseButton.style.display = 'inline-block';
   continueButton.style.display = 'none';
-  console.log('Recording started.');
+  console.log('Recording started with filters.');
 }
+
 
 //..........................................................................................................
 // **Stop Recording**
