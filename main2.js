@@ -100,6 +100,7 @@ function capturePhoto() {
   if (videoAspectRatio > 1) {
     canvas.width = Math.min(video.videoWidth, maxWidth);
     canvas.height = canvas.width / videoAspectRatio;
+    
   } else {
     canvas.height = Math.min(video.videoHeight, maxHeight);
     canvas.width = canvas.height * videoAspectRatio;
