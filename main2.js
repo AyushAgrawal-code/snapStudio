@@ -108,8 +108,10 @@ function capturePhoto() {
 
   // Get the canvas context and apply the filter
   const ctx = canvas.getContext('2d');
+  
+  ctx.scale(-1, 1); // Flip horizontally
   ctx.filter = currentFilter; // Apply the same filter used on the video
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
 
   // Convert canvas content to a data URL for saving
   const dataURL = canvas.toDataURL('image/png');
@@ -153,8 +155,9 @@ function startRecording() {
 
   // Mirror video filters on canvas frames
   const drawFrame = () => {
+    ctx.scale(-1, 1); // Flip horizontally
     ctx.filter = currentFilter; // Apply the filter
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
     requestAnimationFrame(drawFrame); // Keep updating frames
   };
   drawFrame();
@@ -240,6 +243,7 @@ function pauseRecording() {
 // **Continue Recording**
 function continueRecording() {
   if (mediaRecorder && mediaRecorder.state === 'paused') {
+
     mediaRecorder.resume();
     isPaused = false;
     video.play();
