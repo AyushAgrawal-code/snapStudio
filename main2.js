@@ -178,14 +178,14 @@ function startRecording() {
   };
 
   mediaRecorder.onstop = () => {
-    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+    const blob = new Blob(recordedChunks, { mimeType: 'video/mp4' });
     const url = URL.createObjectURL(blob);
 
     saveButton.style.display = 'block';
     saveButton.onclick = () => {
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'recording_with_filters.webm';
+      a.download = 'recording_with_filters.mp4';
       a.click();
       saveButton.style.display = 'none';
       URL.revokeObjectURL(url);
