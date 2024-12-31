@@ -9,7 +9,8 @@ const themeToggle = document.getElementById('themeToggle');
 const pauseButton = document.getElementById('pauseButton');
 const continueButton = document.getElementById('continueButton');
 
-let stream = null;
+let videoStream = null;
+let audioStream = null;
 let mediaRecorder = null;
 let recordedChunks = [];
 let recordingTimer = null;
@@ -23,8 +24,9 @@ let currentFilter = 'none'; // Default filter is none
 // **Start Camera**
 async function startCamera() {
   try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    video.srcObject = stream;
+    videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+    audioStream = await navigator.mediaDevices.getUserMedia({  audio:true });
+    video.srcObject = videoStream;
     video.play();
     console.log('Camera started.');
     stopButton.style.display = 'block'; // Show the stop button when the camera starts
@@ -50,12 +52,14 @@ async function startCamera() {
 //...........................................................................................................
 // **Stop Camera**
 function stopCamera() {
-  if (stream) {
-    stream.getTracks().forEach((track) => track.stop());
+  if (videoStream) {
+    videoStream.getTracks().forEach((track) => track.stop());
     video.srcObject = null;
+
     console.log('Camera stopped.');
   }
   resetTimer();
+  mediaRecorder.stop();
   isRecording = false;
   captureButton.style.display = 'none';
   pauseButton.style.display = 'none';
@@ -137,7 +141,7 @@ function capturePhoto() {
 //..........................................................................................................
 // **Start Recording**
 function startRecording() {
-  if (!stream) {
+  if (!videoStream) {
     alert('Start the camera first!');
     return;
   }
@@ -165,7 +169,7 @@ function startRecording() {
   // Combine canvas stream with audio (if available) from the original stream
   const combinedStream = new MediaStream([
     ...canvasStream.getVideoTracks(),
-    ...stream.getAudioTracks(),
+    ...audioStream.getAudioTracks(),
   ]);
 
   mediaRecorder = new MediaRecorder(combinedStream);
