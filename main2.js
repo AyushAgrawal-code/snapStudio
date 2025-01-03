@@ -8,6 +8,8 @@ const timerDisplay = document.getElementById('timer');
 const themeToggle = document.getElementById('themeToggle');
 const pauseButton = document.getElementById('pauseButton');
 const continueButton = document.getElementById('continueButton');
+const reverseCameraButton = document.getElementById('reverseCameraButton');
+
 
 let videoStream = null;
 let audioStream = null;
@@ -19,12 +21,44 @@ let isRecording = false;
 let isPaused = false;
 let isVideoMode = false;
 let currentFilter = 'none'; // Default filter is none
+let isFront = true;
+let facingMode = "user"
+
+//.....................................................................................................................
+// function for reversing camera
+function reverse(){
+  if(isFront==true){
+    isFront=false;
+    if (videoStream) {
+      // Stop the current tracks
+      videoStream.getTracks().forEach((track) => track.stop());
+    }
+    startCamera(); // Restart the camera with the new facing mode
+  }
+  
+  else{
+   
+     isFront = true;
+     if (videoStream) {
+      // Stop the current tracks
+     videoStream.getTracks().forEach((track) => track.stop());
+    }
+    startCamera(); // Restart the camera with the new facing mode
+  }
+}
+  
+
+
+reverseCameraButton.addEventListener('click',reverse);
 
 //.....................................................................................................................
 // **Start Camera**
 async function startCamera() {
   try {
-    videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+    var facingMode = isFront ? "user" : "environment";
+    videoStream = await navigator.mediaDevices.getUserMedia({ video:
+      { facingMode: { ideal: facingMode } }
+     });
     audioStream = await navigator.mediaDevices.getUserMedia({  audio:true });
     video.srcObject = videoStream;
     video.play();
