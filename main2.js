@@ -54,6 +54,7 @@ async function startCamera() {
 function stopCamera() {
   if (videoStream) {
     videoStream.getTracks().forEach((track) => track.stop());
+    audioStream.getTracks().forEach((track) => track.stop());
     video.srcObject = null;
 
     console.log('Camera stopped.');
