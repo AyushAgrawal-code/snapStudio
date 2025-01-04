@@ -64,7 +64,11 @@ async function startCamera() {
     video.play();
     console.log('Camera started.');
     stopButton.style.display = 'block'; // Show the stop button when the camera starts
-
+    if (isFront) {
+      video.style.transform = "scaleX(-1)"; // Mirror for front camera
+    } else {
+      video.style.transform = "none"; // Normal for rear camera
+    }
     // Dynamic button visibility
     if (isVideoMode) {
       captureButton.style.display = 'block';
@@ -148,9 +152,17 @@ function capturePhoto() {
   // Get the canvas context and apply the filter
   const ctx = canvas.getContext('2d');
   
-  ctx.scale(-1, 1); // Flip horizontally
-  ctx.filter = currentFilter; // Apply the same filter used on the video
-  ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+ 
+
+    // Conditionally apply mirroring only for the front camera
+    if (isFront) {
+      ctx.scale(-1, 1); // Flip horizontally
+      ctx.translate(-canvas.width, 0); // Adjust the canvas position
+    }
+
+    ctx.filter = currentFilter; // Apply the filter
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
 
   // Convert canvas content to a data URL for saving
   const dataURL = canvas.toDataURL('image/png');
@@ -194,9 +206,18 @@ function startRecording() {
 
   // Mirror video filters on canvas frames
   const drawFrame = () => {
-    ctx.scale(-1, 1); // Flip horizontally
+    ctx.save(); // Save the current transformation matrix
+
+    // Conditionally apply mirroring only for the front camera
+    if (isFront) {
+      ctx.scale(-1, 1); // Flip horizontally
+      ctx.translate(-canvas.width, 0); // Adjust the canvas position
+    }
+
     ctx.filter = currentFilter; // Apply the filter
-    ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    ctx.restore(); // Restore the transformation matrix
+
     requestAnimationFrame(drawFrame); // Keep updating frames
   };
   drawFrame();
