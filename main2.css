@@ -141,7 +141,7 @@ body {
   padding: 10px 16px;
   margin: 5px;
   border-radius: 20px;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
   transition: background 0.3s, transform 0.2s;
 }
