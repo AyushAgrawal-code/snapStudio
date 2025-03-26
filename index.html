@@ -19,7 +19,7 @@
           <input type="password" id="password" placeholder="Password" required>
           <span class="toggle-password" onclick="togglePassword()">😎</span>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" id="submit">Login</button>
       </form>
       <div class="login-options">
         <p>Don't have an account? <a href="./signup.html"">Sign Up</a></p>
@@ -39,50 +39,6 @@
       togglePasswordIcon.textContent = isPassword ? '🧐' : '😎'; // Change icon
     }
   </script>
+  <script src="./index.js"></script>
 </body>
 </html>
-
-
-
-<!-- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - PhotoSnap</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="login-container">
-    <div class="login-card">
-      <h2>Welcome Back!</h2>
-      <p>Login to continue enjoying PhotoSnap.</p>
-      <form id="login-form">
-        <div class="input-group">
-          <input type="email" id="email" placeholder="Email" required>
-        </div>
-        <div class="input-group">
-          <input type="password" id="password" placeholder="Password" required>
-          <span class="toggle-password" onclick="togglePassword()">👁️</span>
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <div class="login-options">
-        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
-        <p><a href="main.html">Continue Without Login</a></p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Toggle password visibility
-    function togglePassword() {
-      const passwordField = document.getElementById('password');
-      const passwordType = passwordField.type === 'password' ? 'text' : 'password';
-      passwordField.type = passwordType;
-    }
-  </script>
-</body>
-</html>
- -->
