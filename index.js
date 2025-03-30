@@ -4,10 +4,10 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     event.preventDefault();
     // alert("Signup successful!");
     
-  
-  handleSubmit();
-   
-  });
+    
+    handleSubmit();
+    
+});
 
 
 const BASE_ID = "appSunSHf6bdvfsLj"; // Replace with your Airtable Base ID
@@ -32,6 +32,9 @@ async function matchFromAirtable(email, password) {
         if (response.ok && responseBody.records.length > 0) {
             alert("Login successful!");
             console.log("Login successful", responseBody);
+            
+            // Redirect to user.html with email in the URL
+            window.location.href = `user.html?email=${encodeURIComponent(email)}`;
         } else {
             alert("Invalid credentials. Please try again.");
             console.error("Login failed", responseBody);

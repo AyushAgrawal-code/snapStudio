@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapStudio Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border-bottom: 2px solid #ddd;
+        }
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: gray;
+            margin-right: 15px;
+        }
+        .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Fixed 3 columns */
+    gap: 10px;
+    padding: 15px;
+}
+
+        .photo {
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            align-items: center;
+            background: lightgray;
+            aspect-ratio: 1/1;
+            border-radius: 5px;
+            
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-header">
+        <div class="profile-pic"></div>
+        <div>
+            <h3>User Name</h3>
+            <p>@username</p>
+        </div>
+    </div>
+
+    <div class="photo-grid" id="photosection">
+        <!-- <div class="photo"></div>
+        <div class="photo"></div>
+        <div class="photo"></div>
+        <div class="photo"></div>
+        <div class="photo"></div>
+        <div class="photo"></div>
+        <div class="photo"></div>
+        <div class="photo"></div> -->
+    </div>
+
+</body>
+<script>let photoSection = document.getElementById("photosection");
+        
+    // Sample array (you can change the values)
+    let items = ["Image 1", "Image 2", "Image 3", "Image 4", "Image 5","image6","image7","image8","image8","image8","image8","image8"];
+    
+    // Loop through the array and create divs dynamically
+    items.forEach((text, index) => {
+        let div = document.createElement("div"); // Create a new div
+        div.className = "photo"; // Assign a unique ID
+        div.textContent = text; // Set text content
+        // div.style.width = "100%";
+        // div.style.aspectRatio ="1/1";
+        // div.style.padding = "10px";
+        // div.style.margin = "5px";
+        // div.style.backgroundColor = "lightgray";
+        // div.style.border = "1px solid black";
+    
+        photoSection.appendChild(div); // Append the new div to #photosection
+    });
+    </script>
+</html>

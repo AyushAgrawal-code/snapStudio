@@ -57,6 +57,8 @@ async function writeToAirtable(name, email, password) {
         if (response.ok) {
             alert("signup successfull !");
             console.log("signup successfull", responseBody);
+            
+
         } else {
             alert("Error in sign up. Please try again.");
             console.error("Error signing up", responseBody);
