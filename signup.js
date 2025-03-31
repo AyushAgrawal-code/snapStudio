@@ -1,33 +1,47 @@
-document.getElementById('signupForm').addEventListener('submit', function(event) {
+document.getElementById('signupForm').addEventListener('submit', async function(event) {
     event.preventDefault();
-  
+
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
-  
+
     // Check if the passwords match
     if (password !== confirmPassword) {
-      alert("Passwords do not match! Please try again.");
-      return;
+        alert("Passwords do not match! Please try again.");
+        return;
     }
-  handleSubmit();
-    // Proceed with form submission (e.g., send data to the server)
-    // alert("Signup successful!");
-  
-    // Reset the form
-    document.getElementById('signupForm').reset();
-  });
-  
+    
+    await handleSubmit();
+});
 
-
-
-  const api_key = "patlXMCmSgPTWyGT5.643a96f40fd05db76535878f2f3edb2ac32481daf5cf83476df3964f07ef16e2"
-
-
-  const BASE_ID = "appSunSHf6bdvfsLj"; // Replace with your Airtable Base ID
-const TABLE_NAME = "user_details"; // Replace with your Table Name or friendly name
+// ✅ Your Airtable API details
+const BASE_ID = "appSunSHf6bdvfsLj"; // Replace with your Airtable Base ID
+const TABLE_NAME = "user_details"; // Replace with your Table Name in Airtable
 const API_KEY = "patlXMCmSgPTWyGT5.643a96f40fd05db76535878f2f3edb2ac32481daf5cf83476df3964f07ef16e2"; // Replace with your Airtable API Key
 
-// Function to write form data to Airtable
+// ✅ Function to check if user already exists
+async function checkUserExists(email) {
+    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}?filterByFormula=({email}="${email}")`;
+
+    try {
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${API_KEY}`,
+                "Content-Type": "application/json",
+            },
+        });
+
+        const responseBody = await response.json();
+        
+        // If user exists, return true
+        return responseBody.records.length > 0;
+    } catch (error) {
+        console.error("Error checking user:", error);
+        return false;
+    }
+}
+
+// ✅ Function to write user data to Airtable
 async function writeToAirtable(name, email, password) {
     const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;
     const record = {
@@ -36,7 +50,7 @@ async function writeToAirtable(name, email, password) {
                 fields: {
                     Name: name, // Name field in Airtable
                     email: email, // Email field in Airtable
-                    password: password, // Message field in Airtable
+                    password: password, // Password field in Airtable
                 },
             },
         ],
@@ -55,12 +69,13 @@ async function writeToAirtable(name, email, password) {
         const responseBody = await response.json();
 
         if (response.ok) {
-            alert("signup successfull !");
-            console.log("signup successfull", responseBody);
+            alert("Signup successful! Redirecting to login...");
+            console.log("Signup successful", responseBody);
             
-
+            // ✅ Redirect to login page
+            window.location.href = "index.html";
         } else {
-            alert("Error in sign up. Please try again.");
+            alert("Error in signup. Please try again.");
             console.error("Error signing up", responseBody);
         }
     } catch (error) {
@@ -68,17 +83,18 @@ async function writeToAirtable(name, email, password) {
     }
 }
 
-// Function to handle form submission
+// ✅ Function to handle form submission
 async function handleSubmit() {
     event.preventDefault();
-    // Collect user input values
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
 
-    console.log(name);
-    console.log(email)
-    console.log(password)
+    // Collect user input values
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    console.log("Name:", name);
+    console.log("Email:", email);
+    console.log("Password:", password);
 
     // Validate form inputs
     if (!name || !email || !password) {
@@ -86,11 +102,18 @@ async function handleSubmit() {
         return;
     }
 
-    // Call function to save data to Airtable
+    // ✅ Check if user already exists
+    const userExists = await checkUserExists(email);
+    if (userExists) {
+        alert("User already exists! Please use a different email.");
+        return;
+    }
+
+    // ✅ Call function to save data to Airtable
     await writeToAirtable(name, email, password);
 
-    // Clear the form after submission
-    document.querySelector("form").reset();
+    // ✅ Clear the form after successful signup
+    document.getElementById("signupForm").reset();
 }
 
 
