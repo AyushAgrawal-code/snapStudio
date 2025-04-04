@@ -73,7 +73,7 @@ async function writeToAirtable(name, email, password) {
             console.log("Signup successful", responseBody);
             
             // ✅ Redirect to login page
-            window.location.href = "index.html";
+            window.location.href = "login.html";
         } else {
             alert("Error in signup. Please try again.");
             console.error("Error signing up", responseBody);
