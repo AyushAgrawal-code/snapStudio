@@ -74,6 +74,26 @@ body {
 .profile-button:hover {
   transform: scale(1.1); /* Slight zoom effect */
 }
+.logout-button {
+  width: 40px; /* Adjust size as needed */
+  height: 40px;
+  background-image:url(./images/download.png) ;
+  mix-blend-mode:multiply ;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  overflow:hidden; /* Ensures circular cropping */
+  background-size: contain;
+
+}
+
+.logout-button:hover {
+  transform: scale(1.1); /* Slight zoom effect */
+}
 
 
 

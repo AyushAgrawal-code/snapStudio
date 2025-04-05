@@ -1,126 +1,131 @@
-/* Body and Background */
+/* General Body Styling */
 body {
-    background-color: #1a1a1a;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: #f1f1f1;
-  }
-  
-  /* Container for the form */
-  .signup-container {
-    background-color: #333;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    padding: 30px 40px;
-    width: 100%;
-    max-width: 450px;
-    animation: fadeIn 1s ease-in-out;
-  }
-  
-  /* Form Header */
-  h2 {
-    text-align: center;
-    color: #f1f50c;
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  /* Input Group Styles */
-  .input-group {
-    margin-bottom: 25px;
-  }
-  
-  .input-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #ddd;
-  }
-  
-  .input-group input {
-    width: 100%;
-    padding: 15px;
-    border-radius: 8px;
-    border: 2px solid #444;
-    font-size: 16px;
-    background-color: #222;
-    color: #fff;
-    transition: border-color 0.3s ease;
-  }
-  
-  .input-group input:focus {
-    border-color: #4e91f0;
-    outline: none;
-    box-shadow: 0 0 8px rgba(78, 145, 240, 0.5);
-  }
-  
-  /* Button Styles */
-  button {
-    width: 100%;
-    padding: 15px;
-    background-color: #4e91f0;
-    color: #fff;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #357ae8;
-    box-shadow: 0 0 10px rgba(78, 145, 240, 0.5);
-  }
-  
-  /* Link Style */
-  .signin-link {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .signin-link a {
-    color: #4e91f0;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .signin-link a:hover {
-    text-decoration: underline;
-    color: #357ae8;
-  }
-  
-  /* Animations */
-  @keyframes fadeIn {
-    0% {
+  background: linear-gradient(135deg, #1e1e1e, #121212);
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #f1f1f1;
+}
+
+/* Container for the form */
+.signup-container {
+  background: rgba(51, 51, 51, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Form Header */
+h2 {
+  color: #ffcc00;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Input Group Styling */
+.input-group {
+  margin-bottom: 20px;
+  margin-right: 25px;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ddd;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 6px;
+  border: 2px solid #444;
+  font-size: 16px;
+  background-color: #222;
+  color: #fff;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: #ffcc00;
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+}
+
+/* Button Styling */
+button {
+  margin-left: 15px;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #ffcc00, #ff9900);
+  color: #1e1e1e;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #ff9900, #ff6600);
+  box-shadow: 0 0 12px rgba(255, 153, 0, 0.6);
+}
+
+/* Link Styling */
+.signin-link {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.signin-link a {
+  color: #ffcc00;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.signin-link a:hover {
+  color: #ff9900;
+  text-decoration: underline;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
       opacity: 0;
       transform: translateY(20px);
-    }
-    100% {
+  }
+  to {
       opacity: 1;
       transform: translateY(0);
-    }
   }
-  
-  /* Media Query for Smaller Screens */
-  @media screen and (max-width: 768px) {
-    .signup-container {
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+  .signup-container {
       padding: 20px;
-      width: 80%;
-    }
-  
-    h2 {
+      width: 85%;
+  }
+
+  h2 {
       font-size: 22px;
-    }
-  
-    .input-group input,
-    button {
+  }
+
+  .input-group input,
+  button {
       padding: 12px;
       font-size: 14px;
-    }
   }
-  
+}

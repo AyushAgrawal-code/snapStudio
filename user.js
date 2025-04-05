@@ -211,29 +211,34 @@ function startRecording() {
       }
     };
   
-    mediaRecorder.onstop = async () => {
-      const blob = new Blob(recordedChunks, { type: 'video/mp4' });
-      const fileReader = new FileReader();
-  
-      fileReader.onloadend = async function () {
-        const videoDataURL = fileReader.result;
-  
-        const cloudinaryURL = await uploadToCloudinary(videoDataURL); // ✅ Upload video
-        if (cloudinaryURL) {
-          writeToAirtable(email, null, cloudinaryURL); // ✅ Save Cloudinary URL to Airtable
-          alert("Video saved successfully!");
-        } else {
-          alert("Failed to upload video.");
-        }
+    saveButton.onclick = () => {
+        const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+        const fileReader = new FileReader();
+        // saveButton.style.display = 'block';
+        
+        fileReader.onloadend = async function () {
+          const videoDataURL = fileReader.result;
+    
+          const cloudinaryURL = await uploadToCloudinary(videoDataURL); // ✅ Upload video
+          if (cloudinaryURL) {
+            writeToAirtable(email, null, cloudinaryURL); // ✅ Save Cloudinary URL to Airtable
+            alert("Video saved successfully!");
+          } else {
+            alert("Failed to upload video.");
+          }
+          saveButton.style.display ="none";
+        };
+    
+        fileReader.readAsDataURL(blob);
       };
-  
-      fileReader.readAsDataURL(blob);
-    };
   
     mediaRecorder.start();
     isRecording = true;
     startTimer();
     captureButton.textContent = '⏹ Stop Recording';
+    captureButton.onclick=()=>{saveButton.style.display="block"
+                                stopCamera();
+                              }
     pauseButton.style.display = 'inline-block';
     continueButton.style.display = 'none';
   }
@@ -261,7 +266,7 @@ function stopCamera() {
     captureButton.style.display = 'none';
     pauseButton.style.display = 'none';
     continueButton.style.display = 'none';
-    saveButton.style.display = 'none';
+    // saveButton.style.display = 'none';
   }
   
 //..........................................................................................................

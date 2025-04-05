@@ -9,107 +9,10 @@
   <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
   <script>
 
-
-
-// async function matchFromAirtable(email, password) {
-//     const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}?filterByFormula=AND(email='${email}', password='${password}')`;
-
-//     try {
-//         const response = await fetch(url, {
-//             method: "GET",
-//             headers: {
-//                 Authorization: `Bearer ${API_KEY}`,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-
-//         const responseBody = await response.json();
-
-//         if (response.ok && responseBody.records.length > 0) {
-//             alert("Login successful!");
-//             console.log("Login successful", responseBody);
-            
-//             // Redirect to user.html with email in the URL
-//             window.location.href = `user.html?email=${encodeURIComponent(email)}`;
-//         } else {
-//             alert("Invalid credentials. Please try again.");
-//             console.error("Login failed", responseBody);
-//         }
-//     } catch (error) {
-//         console.error("Error:", error);
-//     }
-document.addEventListener("DOMContentLoaded", function () {
-    // Fetch user data from localStorage
-    const userData = JSON.parse(localStorage.getItem("user"));
-
-    if (!userData) {
-        alert("You must log in first!");
-        window.location.href = "login.html"; // Redirect to login if no user is found
-    } else {
-        console.log("User data:", userData); // Debugging
-
-        // Ensure the element exists before trying to update it
-        const userNameElement = document.getElementById("user-name");
-        if (userNameElement) {
-            userNameElement.innerText = userData.Name || "User";
-            email = userData.email||"email";
-        } else {
-            console.error("Element with ID 'user-name' not found in the DOM.");
-        }
-    }
-    const BASE_ID = "appSunSHf6bdvfsLj"; // Replace with your Airtable Base ID
-const TABLE_NAME = "user_data"; // Replace with your Table Name or friendly name
-const API_KEY = "patrBN0pEEoKIgr8j.0a00b86c77c9ddd225c5e7d9d74a2f8e4e1ced5115ab56137dec66358fb0c5d7"; // Replace with your Airtable API Key
-const email =" ";
-
-document.getElementById("saveButton").addEventListener(onclick,()=>{
-console.log("entered in save button click ");
-// ✅ Function to write user data to Airtable
-async function writeToAirtable( email, photo,video) {
-  console.log("enter in write to table ");
-  const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;
-  const record = {
-    records: [
-      {
-        fields: {
-          
-          email: email, // Email field in Airtable
-          photo: photo, // photo field in Airtable
-          video: video, // photo field in Airtable
-                },
-              },
-            ],
-          };
-          
-          console.log("enter in save button click ");
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${API_KEY}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(record),
-        });
-
-        const responseBody = await response.json();
-
-        if (response.ok) {
-            console.log("writing to db successful", responseBody);
-            
-        } else {
-            alert("Error in uploading to db. Please try again.");
-            console.error("Error signing up", responseBody);
-        }
-    } catch (error) {
-        console.error("Error:", error);
-    }
-}
-});
-
-  });
-
-// }
+  function logoutUser() {
+    localStorage.clear(); // Clear all user data
+    window.location.href = "login.html"; // Redirect to login
+  }
 </script>
 <!-- <script src="./user.js"></script> -->
 </head>
@@ -120,6 +23,7 @@ async function writeToAirtable( email, photo,video) {
    <div id="nameBox">Welcome, <span id="user-name">User</span>!</div>
    <div class="buttons" style="display: flex; justify-content: space-around;">
     <a href="./profile.html"><button class="profile-button"></button> </a>   
+    <button class="logout-button" onclick="logoutUser()" style="margin-left: 5px;"></button>  
     <button class="theme-toggle" id="themeToggle">🌙</button>
   </div>
     
