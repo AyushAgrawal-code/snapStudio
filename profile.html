@@ -132,59 +132,74 @@
   }
 
   async function fetchUserMedia() {
-    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}?filterByFormula={email}="${email}"`;
+  const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}?filterByFormula={email}="${email}"`;
 
-    try {
-      const response = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${API_KEY}`
-        }
-      });
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${API_KEY}`
+      }
+    });
 
-      const data = await response.json();
-      console.log("Fetched user media:", data);
+    const data = await response.json();
+    console.log("Fetched user media:", data);
 
-      data.records.forEach(record => {
-        const fields = record.fields;
+    let combinedMedia = [];
 
-      // ✅ If photo(s) exist
-    if (fields.photo && Array.isArray(fields.photo)) {
-    fields.photo.forEach(photo => {
-    const container = document.createElement("div");
-    container.className = "media-item";
+    data.records.forEach(record => {
+      const fields = record.fields;
 
-    const img = document.createElement("img");
-    img.src = photo.url;
-    img.alt = "Captured photo";
+      // 📸 Add all photos
+      if (fields.photo && Array.isArray(fields.photo)) {
+        fields.photo.forEach(photo => {
+          combinedMedia.push({
+            type: 'photo',
+            url: photo.url,
+            createdTime: record.createdTime
+          });
+        });
+      }
 
-    container.appendChild(img);
-    gallery.appendChild(container);
-  });
-}
+      // 🎥 Add all videos
+      if (fields.video && Array.isArray(fields.video)) {
+        fields.video.forEach(video => {
+          combinedMedia.push({
+            type: 'video',
+            url: video.url,
+            createdTime: record.createdTime
+          });
+        });
+      }
+    });
 
-// ✅ If video(s) exist
-    if (fields.video && Array.isArray(fields.video)) {
-    fields.video.forEach(video => {
-    const container = document.createElement("div");
-    container.className = "media-item";
+    // 🔃 Sort newest first
+    combinedMedia.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
 
-    const videoEl = document.createElement("video");
-    videoEl.src = video.url;
-    videoEl.controls = true;
+    // 🧱 Add to gallery
+    combinedMedia.forEach(media => {
+      const container = document.createElement("div");
+      container.className = "media-item";
 
-    container.appendChild(videoEl);
-    gallery.appendChild(container);
-  });
-}
+      if (media.type === 'photo') {
+        const img = document.createElement("img");
+        img.src = media.url;
+        img.alt = "Captured photo";
+        container.appendChild(img);
+      } else if (media.type === 'video') {
+        const videoEl = document.createElement("video");
+        videoEl.src = media.url;
+        videoEl.controls = true;
+        container.appendChild(videoEl);
+      }
 
-      });
+      gallery.appendChild(container);
+    });
 
-    } catch (error) {
-      console.error("Error fetching media:", error);
-      alert("Could not load your photos/videos.");
-    }
+  } catch (error) {
+    console.error("Error fetching media:", error);
+    alert("Could not load your photos/videos.");
   }
-
+}
   fetchUserMedia();
 });
 </script>
