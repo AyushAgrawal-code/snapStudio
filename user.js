@@ -150,6 +150,8 @@ async function capturePhoto() {
   
     saveButton.style.display = 'block';
     saveButton.onclick = async () => {
+      
+      saveButton.style.display = 'none';
       try {
         const cloudinaryURL = await uploadToCloudinary(dataURL); // ✅ Upload to Cloudinary
         if (cloudinaryURL) {
@@ -163,7 +165,6 @@ async function capturePhoto() {
         alert("An error occurred.");
       }
   
-      saveButton.style.display = 'none';
       video.play();
     };
   }
@@ -214,19 +215,20 @@ function startRecording() {
     saveButton.onclick = () => {
         const blob = new Blob(recordedChunks, { type: 'video/mp4' });
         const fileReader = new FileReader();
-        // saveButton.style.display = 'block';
+        saveButton.style.display ="none";
         
         fileReader.onloadend = async function () {
           const videoDataURL = fileReader.result;
-    
+          
           const cloudinaryURL = await uploadToCloudinary(videoDataURL); // ✅ Upload video
           if (cloudinaryURL) {
             writeToAirtable(email, null, cloudinaryURL); // ✅ Save Cloudinary URL to Airtable
             alert("Video saved successfully!");
           } else {
             alert("Failed to upload video.");
+            saveButton.style.display = 'block';
+
           }
-          saveButton.style.display ="none";
         };
     
         fileReader.readAsDataURL(blob);
